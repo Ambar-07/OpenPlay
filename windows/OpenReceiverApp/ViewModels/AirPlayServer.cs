@@ -38,9 +38,7 @@ namespace OpenReceiver.ViewModels
         private WaveOutEvent _waveOut;
         private BufferedWaveProvider _waveProvider;
 
-        private static readonly string LogPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "OpenReceiver", "airplay.log");
+        private static readonly string LogPath = @"C:\Users\ambar\OneDrive\Desktop\airplay.log";
         private static readonly object LogLock = new object();
 
         public AirPlayServer(NowPlayingViewModel viewModel)
@@ -177,10 +175,7 @@ namespace OpenReceiver.ViewModels
                             Log("     BODY:\n" + Encoding.UTF8.GetString(body));
                         }
 
-                        // Log all requests to a file for debugging
-                        try {
-                            System.IO.File.AppendAllText("requests.log", $"{method} {uri} - {headers.GetValueOrDefault("Content-Type", "No Content-Type")} ({body.Length} bytes)\n");
-                        } catch { }
+
 
                         bool close = await ProcessRequestAsync(stream, method, uri, cseq, headers, body, localIp, remoteIp);
                         if (close) break;

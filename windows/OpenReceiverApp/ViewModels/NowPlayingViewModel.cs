@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 using System.Text;
+using System.IO;
 
 namespace OpenReceiver.ViewModels
 {
@@ -88,37 +89,26 @@ namespace OpenReceiver.ViewModels
             
             byte[] bytesToLoad = imageBytes;
             
-            System.Threading.Tasks.Task.Run(async () =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 try
                 {
                     var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream();
-                    using (var writer = new Windows.Storage.Streams.DataWriter(stream.GetOutputStreamAt(0)))
+                    using (var dotnetStream = stream.AsStreamForWrite())
                     {
-                        writer.WriteBytes(bytesToLoad);
-                        await writer.StoreAsync();
-                        writer.DetachStream(); // Prevent DataWriter from closing the stream on dispose!
+                        dotnetStream.Write(bytesToLoad, 0, bytesToLoad.Length);
+                        dotnetStream.Flush();
                     }
                     
                     stream.Seek(0);
                     
-                    _dispatcherQueue.TryEnqueue(() =>
-                    {
-                        try
-                        {
-                            var bitmap = new Microsoft.UI.Xaml.Media.Imaging.BitmapImage();
-                            bitmap.SetSource(stream);
-                            AlbumArt = bitmap;
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine(ex);
-                        }
-                    });
+                    var bitmap = new Microsoft.UI.Xaml.Media.Imaging.BitmapImage();
+                    bitmap.SetSource(stream);
+                    AlbumArt = bitmap;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex);
+                    System.Diagnostics.Debug.WriteLine("AlbumArt Error: " + ex.Message);
                 }
             });
         }
