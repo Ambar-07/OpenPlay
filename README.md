@@ -19,7 +19,7 @@ Unlike legacy AirPlay mirroring forks, OpenReceiver focuses exclusively on provi
 
 ---
 
-## ⚡ Core Architecture
+##  Core Architecture
 
 The repository is strictly segregated to ensure absolute separation between the protocol parsing layer and the platform-specific UI shells.
 
@@ -41,7 +41,7 @@ The repository is strictly segregated to ensure absolute separation between the 
 
 ---
 
-## ✨ Standout Features
+##  Standout Features
 
 ### Cinematic "Now Playing" Experience
 OpenReceiver doesn't just play audio; it visualizes it. The UI extracts album artwork over the protocol, computes a dominant-color background gradient, and displays gorgeous, full-screen metadata tailored for high-resolution displays.
@@ -54,7 +54,7 @@ The integrated **Lyrics Engine** intercepts incoming track metadata and asynchro
 
 ---
 
-## 🛠️ Building & Integration
+##  Building & Integration
 
 Because OpenReceiver strictly segregates its logic from its UI, building requires the specific toolchain for your target platform.
 
@@ -69,7 +69,7 @@ For Windows deployments, OpenReceiver includes a standalone **Inno Setup** scrip
 
 ---
 
-## 📡 Network & Discovery
+##  Network & Discovery
 
 AirPlay relies heavily on multicast DNS (mDNS). OpenReceiver provides an automated Python mock script (`scripts/advertise_mdns.py`) for testing discovery protocols locally.
 
