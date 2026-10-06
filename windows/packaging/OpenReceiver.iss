@@ -21,7 +21,7 @@ Name: "startup"; Description: "Start OpenReceiver automatically when Windows sta
 [Files]
 ; The main WinUI 3 executable and Core C++ DLLs
 Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\OpenReceiverApp.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\OpenReceiverCore.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\OpenReceiverCore\x64\Release\OpenReceiverCore.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
