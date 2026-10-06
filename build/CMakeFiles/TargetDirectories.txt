@@ -1,0 +1,6 @@
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/CMakeFiles/edit_cache.dir
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/CMakeFiles/rebuild_cache.dir
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/core/CMakeFiles/edit_cache.dir
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/core/CMakeFiles/rebuild_cache.dir
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/tests/CMakeFiles/edit_cache.dir
+C:/Users/ambar/OneDrive/Desktop/OpenReceiver/build/tests/CMakeFiles/rebuild_cache.dir
