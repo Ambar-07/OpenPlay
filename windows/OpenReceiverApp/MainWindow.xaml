@@ -119,24 +119,32 @@
             </Viewbox>
 
             <!-- RIGHT COLUMN: Scrolling Lyrics -->
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.LyricsVisibility, Mode=OneWay}" Margin="0,0,0,0">
+            <StackPanel x:Name="LyricsPanel" Grid.Column="1" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.LyricsVisibility, Mode=OneWay}" Margin="0,0,0,0">
+                <StackPanel.RenderTransform>
+                    <TranslateTransform x:Name="LyricsTranslate" Y="0" />
+                </StackPanel.RenderTransform>
+                
+                <TextBlock Text="{x:Bind ViewModel.PreviousLyric, Mode=OneWay}" 
+                           FontSize="28" Foreground="White" Opacity="0.4"
+                           FontWeight="Medium" TextWrapping="Wrap" Margin="0,0,0,24" LineHeight="40" FontFamily="Segoe UI Variable Display"/>
+
                 <!-- Prominent active line -->
                 <TextBlock Text="{x:Bind ViewModel.CurrentLyric, Mode=OneWay}" 
-                           FontSize="48" Foreground="White" 
-                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,32" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
+                           FontSize="38" Foreground="White" 
+                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24" LineHeight="48" FontFamily="Segoe UI Variable Display"/>
                            
                 <!-- Fading surrounding lines -->
                 <TextBlock Text="{x:Bind ViewModel.NextLyric, Mode=OneWay}" 
-                           FontSize="48" Foreground="White" Opacity="0.4"
-                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,32" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
+                           FontSize="32" Foreground="White" Opacity="0.4"
+                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24" LineHeight="44" FontFamily="Segoe UI Variable Display"/>
                            
                 <TextBlock Text="{x:Bind ViewModel.NextNextLyric, Mode=OneWay}" 
-                           FontSize="48" Foreground="White" Opacity="0.2"
-                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,32" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
+                           FontSize="32" Foreground="White" Opacity="0.2"
+                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24" LineHeight="44" FontFamily="Segoe UI Variable Display"/>
                            
                 <TextBlock Text="" 
-                           FontSize="48" Foreground="White" Opacity="0.1"
-                           FontWeight="Bold" TextWrapping="Wrap" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
+                           FontSize="32" Foreground="White" Opacity="0.1"
+                           FontWeight="Bold" TextWrapping="Wrap" LineHeight="44" FontFamily="Segoe UI Variable Display"/>
             </StackPanel>
             
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"

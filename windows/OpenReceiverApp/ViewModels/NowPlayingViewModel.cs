@@ -325,16 +325,25 @@ namespace OpenReceiver.ViewModels
 
             if (activeIndex >= 0)
             {
-                CurrentLyric = _activeLyricsLines[activeIndex].Text;
-                NextLyric = (activeIndex + 1 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 1].Text : "";
-                NextNextLyric = (activeIndex + 2 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 2].Text : "";
+                // Only update if it actually changed, to avoid triggering the animation repeatedly
+                if (CurrentLyric != _activeLyricsLines[activeIndex].Text)
+                {
+                    PreviousLyric = (activeIndex - 1 >= 0) ? _activeLyricsLines[activeIndex - 1].Text : "";
+                    CurrentLyric = _activeLyricsLines[activeIndex].Text;
+                    NextLyric = (activeIndex + 1 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 1].Text : "";
+                    NextNextLyric = (activeIndex + 2 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 2].Text : "";
+                }
             }
             else
             {
                 // Before the first line
-                CurrentLyric = "";
-                NextLyric = _activeLyricsLines.Count > 0 ? _activeLyricsLines[0].Text : "";
-                NextNextLyric = _activeLyricsLines.Count > 1 ? _activeLyricsLines[1].Text : "";
+                if (CurrentLyric != "")
+                {
+                    PreviousLyric = "";
+                    CurrentLyric = "";
+                    NextLyric = _activeLyricsLines.Count > 0 ? _activeLyricsLines[0].Text : "";
+                    NextNextLyric = _activeLyricsLines.Count > 1 ? _activeLyricsLines[1].Text : "";
+                }
             }
         }
     }
