@@ -16,6 +16,9 @@ namespace OpenReceiver
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
             
+            // Enable gorgeous Acrylic Backdrop
+            SystemBackdrop = new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop();
+            
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             // Connect to real C++ AirPlay State Machine
             ViewModel.ConnectRealState();
@@ -37,9 +40,10 @@ namespace OpenReceiver
                 
                 var fadeAnim = new Microsoft.UI.Xaml.Media.Animation.DoubleAnimation
                 {
-                    From = 0.3,
+                    From = 0.6,
                     To = 1.0,
-                    Duration = new Microsoft.UI.Xaml.Duration(System.TimeSpan.FromMilliseconds(450))
+                    Duration = new Microsoft.UI.Xaml.Duration(System.TimeSpan.FromMilliseconds(500)),
+                    EasingFunction = new Microsoft.UI.Xaml.Media.Animation.QuarticEase { EasingMode = Microsoft.UI.Xaml.Media.Animation.EasingMode.EaseOut }
                 };
                 
                 Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTarget(slideAnim, LyricsTranslate);
