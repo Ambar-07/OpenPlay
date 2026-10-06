@@ -100,12 +100,7 @@
                         <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.PositionString, Mode=OneWay}" Foreground="White" Opacity="0.6" FontSize="11" VerticalAlignment="Center" Margin="0,0,12,0"/>
                         
                         <!-- Sleek timeline bar (Apple Music style) -->
-                        <Grid Grid.Column="1" VerticalAlignment="Center" Height="20" Background="Transparent"
-                              PointerPressed="OnTimelinePointerPressed"
-                              PointerMoved="OnTimelinePointerMoved"
-                              PointerReleased="OnTimelinePointerReleased"
-                              PointerCanceled="OnTimelinePointerReleased"
-                              PointerCaptureLost="OnTimelinePointerReleased">
+                        <Grid Grid.Column="1" VerticalAlignment="Center" Height="20" Background="Transparent">
                             <!-- The bar -->
                             <Grid VerticalAlignment="Center" Height="3">
                                 <Rectangle Fill="#33FFFFFF" RadiusX="1.5" RadiusY="1.5" HorizontalAlignment="Stretch"/>
