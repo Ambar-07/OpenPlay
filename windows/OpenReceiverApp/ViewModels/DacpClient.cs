@@ -54,11 +54,15 @@ namespace OpenReceiver.ViewModels
                 request.Headers.Add("Active-Remote", ActiveRemote);
                 
                 var response = await _httpClient.SendAsync(request);
-                System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP {command} response: {response.StatusCode}");
+                string responseText = $"[{DateTime.Now:HH:mm:ss.fff}] DACP {command} response: {response.StatusCode}";
+                System.Diagnostics.Debug.WriteLine(responseText);
+                try { System.IO.File.AppendAllText("airplay.log", responseText + "\n"); } catch {}
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP Error: {ex.Message}");
+                string errorText = $"[{DateTime.Now:HH:mm:ss.fff}] DACP Error: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine(errorText);
+                try { System.IO.File.AppendAllText("airplay.log", errorText + "\n"); } catch {}
             }
         }
 
