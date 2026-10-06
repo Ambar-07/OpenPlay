@@ -4,6 +4,7 @@
 #include <cstring>
 #include "../../core/metadata/MetadataParser.h"
 #include "../../core/metadata/ArtworkCache.h"
+#include "../../core/metadata/BackgroundGenerator.h"
 
 using namespace openreceiver::metadata;
 
@@ -63,9 +64,32 @@ void testArtworkCache() {
     std::cout << "testArtworkCache PASSED\n";
 }
 
+void testBackgroundGenerator() {
+    auto& generator = BackgroundGenerator::getInstance();
+    std::string trackId = "track_bg_123";
+    std::vector<uint8_t> dummyImage = {0xFF, 0xD8};
+
+    // First call should run asynchronously and cache
+    auto futureColors = generator.generateAsync(trackId, dummyImage);
+    BackgroundColors colors = futureColors.get();
+    
+    assert(colors.primary.r == 43);
+    assert(colors.secondary.r == 17);
+
+    // Second call should hit the cache
+    auto cachedFuture = generator.generateAsync(trackId, dummyImage);
+    BackgroundColors cachedColors = cachedFuture.get();
+    
+    assert(cachedColors.primary.r == 43);
+    
+    generator.clearCache();
+    std::cout << "testBackgroundGenerator PASSED\n";
+}
+
 int main() {
     testMetadataParser();
     testArtworkCache();
+    testBackgroundGenerator();
     std::cout << "All metadata tests passed successfully.\n";
     return 0;
 }
