@@ -218,6 +218,29 @@ namespace OpenReceiver.ViewModels
             NextLyric = "Woo-hoo";
         }
 
+        public async void TogglePlayPause()
+        {
+            await DacpClient.SendCommandAsync("playpause");
+        }
+
+        public async void NextTrack()
+        {
+            await DacpClient.SendCommandAsync("nextitem");
+        }
+
+        public async void PreviousTrack()
+        {
+            await DacpClient.SendCommandAsync("previtem");
+        }
+
+        public void ToggleLyrics()
+        {
+            if (_activeLyricsLines != null && _activeLyricsLines.Count > 0)
+            {
+                IsLyricsAvailable = !IsLyricsAvailable;
+            }
+        }
+
         // P/Invoke definitions for the Native Bridge
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void TrackInfoCallback(string title, string artist, string album, double duration);

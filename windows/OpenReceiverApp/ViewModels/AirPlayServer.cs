@@ -177,6 +177,12 @@ namespace OpenReceiver.ViewModels
 
 
 
+                        if (headers.TryGetValue("Active-Remote", out var activeRemote))
+                        {
+                            DacpClient.ActiveRemote = activeRemote;
+                            DacpClient.ClientIp = remoteIp.ToString();
+                        }
+
                         bool close = await ProcessRequestAsync(stream, method, uri, cseq, headers, body, localIp, remoteIp);
                         if (close) break;
                     }

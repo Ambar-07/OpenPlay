@@ -97,21 +97,21 @@
                         
                         <!-- Playback Controls (Center) - No circle, just clean icons -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Button Background="Transparent" BorderThickness="0" Margin="0,0,24,0">
+                            <Button Background="Transparent" BorderThickness="0" Margin="0,0,24,0" Click="{x:Bind ViewModel.PreviousTrack}">
                                 <FontIcon Glyph="&#xE892;" Foreground="White" FontSize="16"/>
                             </Button>
                             
-                            <Button Background="Transparent" BorderThickness="0" Padding="12,4">
+                            <Button Background="Transparent" BorderThickness="0" Padding="12,4" Click="{x:Bind ViewModel.TogglePlayPause}">
                                 <FontIcon Glyph="{x:Bind ViewModel.PlayPauseGlyph, Mode=OneWay}" Foreground="White" FontSize="28"/>
                             </Button>
                             
-                            <Button Background="Transparent" BorderThickness="0" Margin="24,0,0,0">
+                            <Button Background="Transparent" BorderThickness="0" Margin="24,0,0,0" Click="{x:Bind ViewModel.NextTrack}">
                                 <FontIcon Glyph="&#xE893;" Foreground="White" FontSize="16"/>
                             </Button>
                         </StackPanel>
                         
                         <!-- Lyrics Toggle (Right aligned with chat bubble icon) -->
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="#33FFFFFF" BorderThickness="0" CornerRadius="8" Padding="12,6">
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="#33FFFFFF" BorderThickness="0" CornerRadius="8" Padding="12,6" Click="{x:Bind ViewModel.ToggleLyrics}">
                             <FontIcon Glyph="&#xE8BD;" Foreground="White" FontSize="14" Opacity="0.9"/>
                         </Button>
                     </Grid>
