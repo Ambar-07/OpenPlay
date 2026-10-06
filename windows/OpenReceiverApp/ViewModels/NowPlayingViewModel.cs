@@ -82,14 +82,13 @@ namespace OpenReceiver.ViewModels
             }
         }
 
-        public async void SetAlbumArtFromBytes(byte[] imageBytes)
+        public void SetAlbumArtFromBytes(byte[] imageBytes)
         {
             if (imageBytes == null || imageBytes.Length == 0) return;
             
-            // We must use a local variable to avoid cross-thread issues before dispatching
             byte[] bytesToLoad = imageBytes;
             
-            _dispatcherQueue.TryEnqueue(async () =>
+            System.Threading.Tasks.Task.Run(async () =>
             {
                 try
                 {
@@ -100,12 +99,21 @@ namespace OpenReceiver.ViewModels
                         await writer.StoreAsync();
                     }
                     
-                    // Rewind the stream to the beginning so the bitmap can read it!
                     stream.Seek(0);
                     
-                    var bitmap = new Microsoft.UI.Xaml.Media.Imaging.BitmapImage();
-                    bitmap.SetSource(stream);
-                    AlbumArt = bitmap;
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        try
+                        {
+                            var bitmap = new Microsoft.UI.Xaml.Media.Imaging.BitmapImage();
+                            bitmap.SetSource(stream);
+                            AlbumArt = bitmap;
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex);
+                        }
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -135,6 +143,8 @@ namespace OpenReceiver.ViewModels
                 OnPropertyChanged(nameof(PositionString));
                 OnPropertyChanged(nameof(RemainingString));
                 OnPropertyChanged(nameof(ProgressPercent));
+                OnPropertyChanged(nameof(ProgressStarWidth));
+                OnPropertyChanged(nameof(RemainingStarWidth));
             }
         }
 
@@ -152,6 +162,9 @@ namespace OpenReceiver.ViewModels
         public string PositionString => TimeSpan.FromSeconds(_position).ToString(@"m\:ss");
         public string RemainingString => "-" + TimeSpan.FromSeconds(Math.Max(0, _duration - _position)).ToString(@"m\:ss");
         public double ProgressPercent => _duration > 0 ? (_position / _duration) * 100.0 : 0;
+        
+        public Microsoft.UI.Xaml.GridLength ProgressStarWidth => new Microsoft.UI.Xaml.GridLength(Math.Max(ProgressPercent, 0.01), Microsoft.UI.Xaml.GridUnitType.Star);
+        public Microsoft.UI.Xaml.GridLength RemainingStarWidth => new Microsoft.UI.Xaml.GridLength(Math.Max(100.0 - ProgressPercent, 0.01), Microsoft.UI.Xaml.GridUnitType.Star);
 
         public string PreviousLyric
         {
