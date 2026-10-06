@@ -324,12 +324,12 @@ namespace OpenReceiver.ViewModels
                                 }
                                 else if (line.StartsWith("progress:"))
                                 {
-                                    // progress: <curr>/<start>/<end> RTP timestamps
+                                    // progress: <start>/<curr>/<end> RTP timestamps
                                     var parts = line.Substring(9).Trim().Split('/');
                                     if (parts.Length >= 3)
                                     {
-                                        if (long.TryParse(parts[0], out long curr) &&
-                                            long.TryParse(parts[1], out long start) &&
+                                        if (long.TryParse(parts[0], out long start) &&
+                                            long.TryParse(parts[1], out long curr) &&
                                             long.TryParse(parts[2], out long end))
                                         {
                                             // Audio is usually 44100 Hz
