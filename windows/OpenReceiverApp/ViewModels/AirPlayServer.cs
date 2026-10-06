@@ -510,17 +510,18 @@ namespace OpenReceiver.ViewModels
                         }
                     }
 
-                    _viewModel.DispatcherQueue.TryEnqueue(() =>
+                    if (title != null || artist != null || album != null || (durationMs != null && durationMs > 0))
                     {
-                        if (title != null) _viewModel.Title = title;
-                        if (artist != null) _viewModel.Artist = artist;
-                        if (album != null) _viewModel.Album = album;
+                        double finalDuration = (durationMs != null && durationMs > 0) ? durationMs.Value / 1000.0 : -1;
+                        _viewModel.UpdateTrackInfo(title, artist, album, finalDuration);
+                        
                         if (durationMs != null && durationMs > 0)
                         {
-                            _viewModel.Duration = durationMs.Value / 1000.0;
-                            _viewModel.Position = 0; // Reset position on new song
+                            _viewModel.DispatcherQueue.TryEnqueue(() => {
+                                _viewModel.Position = 0;
+                            });
                         }
-                    });
+                    }
                 }
             }
             catch (Exception ex)

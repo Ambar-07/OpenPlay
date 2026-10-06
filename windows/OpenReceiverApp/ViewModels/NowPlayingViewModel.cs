@@ -257,32 +257,7 @@ namespace OpenReceiver.ViewModels
             // Keep references to delegates to prevent garbage collection
             _trackCallback = (t, art, alb, d) =>
             {
-                _dispatcherQueue.TryEnqueue(async () =>
-                {
-                    bool trackChanged = (Title != t || Artist != art);
-                    
-                    Title = t;
-                    Artist = art;
-                    Album = alb;
-                    Duration = d;
-                    
-                    if (trackChanged)
-                    {
-                        IsLyricsAvailable = false;
-                        CurrentLyric = "";
-                        NextLyric = "";
-                        NextNextLyric = "";
-                        _activeLyricsLines = null;
-                        
-                        var lines = await LyricsFetcher.FetchLyricsAsync(t, art, alb);
-                        if (lines != null && lines.Count > 0)
-                        {
-                            _activeLyricsLines = lines;
-                            IsLyricsAvailable = true;
-                            UpdateLyricsForPosition(Position);
-                        }
-                    }
-                });
+                UpdateTrackInfo(t, art, alb, d);
             };
 
             _playbackCallback = (status, pos) =>
@@ -302,6 +277,37 @@ namespace OpenReceiver.ViewModels
             SetTrackInfoCallback(_trackCallback);
             SetPlaybackStateCallback(_playbackCallback);
         }
+
+        public void UpdateTrackInfo(string t, string art, string alb, double d)
+        {
+            _dispatcherQueue.TryEnqueue(async () =>
+            {
+                bool trackChanged = (Title != t || Artist != art);
+                
+                if (t != null) Title = t;
+                if (art != null) Artist = art;
+                if (alb != null) Album = alb;
+                if (d > 0) Duration = d;
+                
+                if (trackChanged && !string.IsNullOrEmpty(Title))
+                {
+                    IsLyricsAvailable = false;
+                    CurrentLyric = "";
+                    NextLyric = "";
+                    NextNextLyric = "";
+                    _activeLyricsLines = null;
+                    
+                    var lines = await LyricsFetcher.FetchLyricsAsync(Title, Artist, Album);
+                    if (lines != null && lines.Count > 0)
+                    {
+                        _activeLyricsLines = lines;
+                        IsLyricsAvailable = true;
+                        UpdateLyricsForPosition(Position);
+                    }
+                }
+            });
+        }
+        
         private void UpdateLyricsForPosition(double positionSecs)
         {
             if (_activeLyricsLines == null || _activeLyricsLines.Count == 0)
