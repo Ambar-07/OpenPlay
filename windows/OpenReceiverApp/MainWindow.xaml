@@ -6,12 +6,19 @@
     Title="OpenReceiver">
 
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Color="#CC1C1C1C" Offset="0.0" />
-                <GradientStop Color="#E60D0D0D" Offset="1.0" />
-            </LinearGradientBrush>
-        </Grid.Background>
+        <!-- The Adaptive, Flowing Album Art Background -->
+        <Image x:Name="BgImage" Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Opacity="0.9" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <CompositeTransform x:Name="BgTransform" ScaleX="1.2" ScaleY="1.2" Rotation="0"/>
+            </Image.RenderTransform>
+        </Image>
+        
+        <!-- Heavy Blur Overlay to create the smooth gradient look -->
+        <Grid>
+            <Grid.Background>
+                <AcrylicBrush TintColor="#FF1A1A1A" TintOpacity="0.55" FallbackColor="#FF1A1A1A" />
+            </Grid.Background>
+        </Grid>
 
         <!-- Custom Title Bar Area (Top edge seamlessness) -->
         <Grid x:Name="AppTitleBar" Height="40" VerticalAlignment="Top" Background="Transparent" Canvas.ZIndex="100"/>
@@ -38,7 +45,7 @@
                         <Grid.Shadow>
                             <ThemeShadow/>
                         </Grid.Shadow>
-                        <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Margin="0" CornerRadius="12"/>
+                        <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Margin="0"/>
                         <!-- Soft border overlay -->
                         <Border BorderBrush="#1AFFFFFF" BorderThickness="1" CornerRadius="12" />
                     </Grid>

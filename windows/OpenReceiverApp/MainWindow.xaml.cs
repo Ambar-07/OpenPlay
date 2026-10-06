@@ -22,6 +22,48 @@ namespace OpenReceiver
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             // Connect to real C++ AirPlay State Machine
             ViewModel.ConnectRealState();
+            
+            StartBackgroundAnimation();
+        }
+
+        private void StartBackgroundAnimation()
+        {
+            var storyboard = new Microsoft.UI.Xaml.Media.Animation.Storyboard { RepeatBehavior = Microsoft.UI.Xaml.Media.Animation.RepeatBehavior.Forever };
+
+            var scaleXAnim = new Microsoft.UI.Xaml.Media.Animation.DoubleAnimation
+            {
+                From = 1.1, To = 1.5,
+                Duration = new Microsoft.UI.Xaml.Duration(System.TimeSpan.FromSeconds(25)),
+                AutoReverse = true,
+                EasingFunction = new Microsoft.UI.Xaml.Media.Animation.SineEase { EasingMode = Microsoft.UI.Xaml.Media.Animation.EasingMode.EaseInOut }
+            };
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTarget(scaleXAnim, BgTransform);
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTargetProperty(scaleXAnim, "ScaleX");
+
+            var scaleYAnim = new Microsoft.UI.Xaml.Media.Animation.DoubleAnimation
+            {
+                From = 1.1, To = 1.5,
+                Duration = new Microsoft.UI.Xaml.Duration(System.TimeSpan.FromSeconds(30)),
+                AutoReverse = true,
+                EasingFunction = new Microsoft.UI.Xaml.Media.Animation.SineEase { EasingMode = Microsoft.UI.Xaml.Media.Animation.EasingMode.EaseInOut }
+            };
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTarget(scaleYAnim, BgTransform);
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTargetProperty(scaleYAnim, "ScaleY");
+
+            var rotateAnim = new Microsoft.UI.Xaml.Media.Animation.DoubleAnimation
+            {
+                From = -5, To = 5,
+                Duration = new Microsoft.UI.Xaml.Duration(System.TimeSpan.FromSeconds(40)),
+                AutoReverse = true,
+                EasingFunction = new Microsoft.UI.Xaml.Media.Animation.SineEase { EasingMode = Microsoft.UI.Xaml.Media.Animation.EasingMode.EaseInOut }
+            };
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTarget(rotateAnim, BgTransform);
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTargetProperty(rotateAnim, "Rotation");
+
+            storyboard.Children.Add(scaleXAnim);
+            storyboard.Children.Add(scaleYAnim);
+            storyboard.Children.Add(rotateAnim);
+            storyboard.Begin();
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
