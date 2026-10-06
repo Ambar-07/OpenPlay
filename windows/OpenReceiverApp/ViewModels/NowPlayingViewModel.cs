@@ -21,7 +21,9 @@ namespace OpenReceiver.ViewModels
         private string _previousLyric = "";
         private string _currentLyric = "";
         private string _nextLyric = "";
+        private string _nextNextLyric = "";
         private bool _isLyricsAvailable = false;
+        private System.Collections.Generic.List<LrcLine> _activeLyricsLines;
         
         private Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
         private Microsoft.UI.Dispatching.DispatcherQueueTimer _timer;
@@ -133,6 +135,7 @@ namespace OpenReceiver.ViewModels
                 OnPropertyChanged(nameof(RemainingString));
                 OnPropertyChanged(nameof(ProgressPercent));
                 OnPropertyChanged(nameof(ProgressScale));
+                UpdateLyricsForPosition(value);
             }
         }
 
@@ -168,6 +171,12 @@ namespace OpenReceiver.ViewModels
         {
             get => _nextLyric;
             set { _nextLyric = value; OnPropertyChanged(); }
+        }
+
+        public string NextNextLyric
+        {
+            get => _nextNextLyric;
+            set { _nextNextLyric = value; OnPropertyChanged(); }
         }
 
         public bool IsLyricsAvailable
@@ -248,13 +257,31 @@ namespace OpenReceiver.ViewModels
             // Keep references to delegates to prevent garbage collection
             _trackCallback = (t, art, alb, d) =>
             {
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(async () =>
                 {
+                    bool trackChanged = (Title != t || Artist != art);
+                    
                     Title = t;
                     Artist = art;
                     Album = alb;
                     Duration = d;
-                    SetAlbumArtFromPath("https://upload.wikimedia.org/wikipedia/en/3/36/Blur_-_Song_2.jpg");
+                    
+                    if (trackChanged)
+                    {
+                        IsLyricsAvailable = false;
+                        CurrentLyric = "";
+                        NextLyric = "";
+                        NextNextLyric = "";
+                        _activeLyricsLines = null;
+                        
+                        var lines = await LyricsFetcher.FetchLyricsAsync(t, art, alb);
+                        if (lines != null && lines.Count > 0)
+                        {
+                            _activeLyricsLines = lines;
+                            IsLyricsAvailable = true;
+                            UpdateLyricsForPosition(Position);
+                        }
+                    }
                 });
             };
 
@@ -274,6 +301,35 @@ namespace OpenReceiver.ViewModels
             InitializeBridge();
             SetTrackInfoCallback(_trackCallback);
             SetPlaybackStateCallback(_playbackCallback);
+        }
+        private void UpdateLyricsForPosition(double positionSecs)
+        {
+            if (_activeLyricsLines == null || _activeLyricsLines.Count == 0)
+                return;
+
+            // Find the active line (the last line that is <= positionSecs)
+            int activeIndex = -1;
+            for (int i = 0; i < _activeLyricsLines.Count; i++)
+            {
+                if (positionSecs >= _activeLyricsLines[i].TimeSeconds)
+                    activeIndex = i;
+                else
+                    break;
+            }
+
+            if (activeIndex >= 0)
+            {
+                CurrentLyric = _activeLyricsLines[activeIndex].Text;
+                NextLyric = (activeIndex + 1 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 1].Text : "";
+                NextNextLyric = (activeIndex + 2 < _activeLyricsLines.Count) ? _activeLyricsLines[activeIndex + 2].Text : "";
+            }
+            else
+            {
+                // Before the first line
+                CurrentLyric = "";
+                NextLyric = _activeLyricsLines.Count > 0 ? _activeLyricsLines[0].Text : "";
+                NextNextLyric = _activeLyricsLines.Count > 1 ? _activeLyricsLines[1].Text : "";
+            }
         }
     }
 }

@@ -130,11 +130,11 @@
                            FontSize="48" Foreground="White" Opacity="0.4"
                            FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,32" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
                            
-                <TextBlock Text="Woo-hoo" 
+                <TextBlock Text="{x:Bind ViewModel.NextNextLyric, Mode=OneWay}" 
                            FontSize="48" Foreground="White" Opacity="0.2"
                            FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,32" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
                            
-                <TextBlock Text="Woo-hoo" 
+                <TextBlock Text="" 
                            FontSize="48" Foreground="White" Opacity="0.1"
                            FontWeight="Bold" TextWrapping="Wrap" LineHeight="60" FontFamily="Segoe UI Variable Display"/>
             </StackPanel>
