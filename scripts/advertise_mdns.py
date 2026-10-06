@@ -32,13 +32,15 @@ if __name__ == '__main__':
         b'vs': b'130.14',
         b'am': b'AppleTV2,1',
         b'fv': b'76400.10',
-        b'sf': b'0x4'
+        b'sf': b'0x4',
+        b'features': b'0x5a7FFFF7,0x1E',
+        b'flags': b'0x4'
     }
     
-    # The MAC address acts as the unique device ID
     device_id = "00:11:22:33:44:55"
     
-    info = ServiceInfo(
+    # RAOP (Audio) signature
+    info_raop = ServiceInfo(
         "_raop._tcp.local.",
         f"{device_id}@OpenReceiver._raop._tcp.local.",
         addresses=[socket.inet_aton(ip)],
@@ -46,10 +48,28 @@ if __name__ == '__main__':
         properties=properties,
         server="OpenReceiver.local.",
     )
+
+    # AirPlay (Video/Generic) signature required by newer iOS
+    airplay_properties = {
+        b'deviceid': device_id.encode('utf-8'),
+        b'features': b'0x5a7FFFF7,0x1E',
+        b'model': b'AppleTV2,1',
+        b'srcvers': b'220.68'
+    }
+
+    info_airplay = ServiceInfo(
+        "_airplay._tcp.local.",
+        "OpenReceiver._airplay._tcp.local.",
+        addresses=[socket.inet_aton(ip)],
+        port=port,
+        properties=airplay_properties,
+        server="OpenReceiver.local.",
+    )
     
     zeroconf = Zeroconf()
     print(f"Advertising AirPlay service on {ip}:{port}...")
-    zeroconf.register_service(info)
+    zeroconf.register_service(info_raop)
+    zeroconf.register_service(info_airplay)
     
     try:
         while True:
@@ -58,5 +78,6 @@ if __name__ == '__main__':
         pass
     finally:
         print("Unregistering...")
-        zeroconf.unregister_service(info)
+        zeroconf.unregister_service(info_raop)
+        zeroconf.unregister_service(info_airplay)
         zeroconf.close()
