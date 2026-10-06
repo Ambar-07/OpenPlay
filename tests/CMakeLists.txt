@@ -23,3 +23,7 @@ add_test(NAME LrcParserTest COMMAND LrcParserTest)
 add_executable(LocalLrcProviderTest lyrics/LocalLrcProviderTest.cpp)
 target_link_libraries(LocalLrcProviderTest PRIVATE core_lib)
 add_test(NAME LocalLrcProviderTest COMMAND LocalLrcProviderTest)
+
+add_executable(LrclibProviderTest lyrics/LrclibProviderTest.cpp)
+target_link_libraries(LrclibProviderTest PRIVATE core_lib)
+add_test(NAME LrclibProviderTest COMMAND LrclibProviderTest)

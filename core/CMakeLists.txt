@@ -7,5 +7,6 @@ add_library(core_lib STATIC
     state/StateManager.cpp
     lyrics/LrcParser.cpp
     lyrics/LocalLrcProvider.cpp
+    lyrics/LrclibProvider.cpp
 )
 target_include_directories(core_lib PUBLIC .)
