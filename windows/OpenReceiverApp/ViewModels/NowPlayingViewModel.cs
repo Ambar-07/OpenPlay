@@ -346,7 +346,7 @@ namespace OpenReceiver.ViewModels
                     NextNextLyric = "";
                     _activeLyricsLines = null;
                     
-                    var lines = await LyricsFetcher.FetchLyricsAsync(Title, Artist, Album);
+                    var lines = await LyricsFetcher.FetchLyricsAsync(Title, Artist, Album, Duration);
                     if (lines != null && lines.Count > 0)
                     {
                         _activeLyricsLines = lines;

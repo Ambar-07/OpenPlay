@@ -564,6 +564,7 @@ namespace OpenReceiver.ViewModels
 
                     if (title != null || artist != null || album != null || (durationMs != null && durationMs > 0))
                     {
+                        Log($"[DMAP Parsed] Track='{title}', Artist='{artist}', Album='{album}', Duration={durationMs}ms");
                         double finalDuration = (durationMs != null && durationMs > 0) ? durationMs.Value / 1000.0 : -1;
                         _viewModel.UpdateTrackInfo(title, artist, album, finalDuration);
                         
