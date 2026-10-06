@@ -26,12 +26,12 @@
         <!-- Main Content (Expanded to remove borders) -->
         <Grid Margin="120,40,120,40" ColumnSpacing="140">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4.5*"/> <!-- Left Side -->
-                <ColumnDefinition Width="5.5*"/> <!-- Right Side -->
+                <ColumnDefinition x:Name="AlbumColumn" Width="4.5*"/> <!-- Left Side -->
+                <ColumnDefinition x:Name="LyricsColumn" Width="5.5*"/> <!-- Right Side -->
             </Grid.ColumnDefinitions>
 
-            <!-- LEFT COLUMN: Perfectly proportioned 400px fixed width layout -->
-            <Viewbox Grid.Column="0" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <!-- LEFT COLUMN: Perfectly proportioned fixed width layout -->
+            <Viewbox x:Name="AlbumViewbox" Grid.Column="0" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <Grid Width="420">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

@@ -98,6 +98,22 @@ namespace OpenReceiver
                 storyboard.Children.Add(fadeAnim);
                 storyboard.Begin();
             }
+            else if (e.PropertyName == nameof(ViewModel.LyricsVisibility))
+            {
+                if (ViewModel.LyricsVisibility == Visibility.Visible)
+                {
+                    AlbumColumn.Width = new GridLength(4.5, GridUnitType.Star);
+                    LyricsColumn.Width = new GridLength(5.5, GridUnitType.Star);
+                    AlbumViewbox.HorizontalAlignment = HorizontalAlignment.Right;
+                }
+                else
+                {
+                    // Center the album art by making it take the full width
+                    AlbumColumn.Width = new GridLength(1, GridUnitType.Star);
+                    LyricsColumn.Width = new GridLength(0);
+                    AlbumViewbox.HorizontalAlignment = HorizontalAlignment.Center;
+                }
+            }
         }
     }
 }
