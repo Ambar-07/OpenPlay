@@ -26,12 +26,15 @@ namespace OpenReceiver.ViewModels
                     var results = await Zeroconf.ZeroconfResolver.ResolveAsync("_dacp._tcp.local.");
                     foreach (var host in results)
                     {
-                        if (host.IPAddress == ClientIp && host.Services.ContainsKey("_dacp._tcp.local."))
+                        if (host.IPAddress == ClientIp)
                         {
-                            var service = host.Services["_dacp._tcp.local."];
-                            _resolvedPort = service.Port;
-                            System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] Resolved DACP port for {ClientIp} to {_resolvedPort}");
-                            break;
+                            foreach (var svc in host.Services.Values)
+                            {
+                                _resolvedPort = svc.Port;
+                                System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] Resolved DACP port for {ClientIp} to {_resolvedPort}");
+                                break;
+                            }
+                            if (_resolvedPort != -1) break;
                         }
                     }
                     
