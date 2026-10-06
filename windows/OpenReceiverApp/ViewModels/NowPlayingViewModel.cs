@@ -16,6 +16,20 @@ namespace OpenReceiver.ViewModels
         private bool _isPlaying = false;
         private double _position = 0;
         private double _duration = 100;
+        private double _volumePercent = 100.0;
+        
+        public double VolumePercent
+        {
+            get => _volumePercent;
+            set 
+            { 
+                _volumePercent = value; 
+                OnPropertyChanged(); 
+                OnPropertyChanged(nameof(VolumeScale));
+            }
+        }
+
+        public double VolumeScale => _volumePercent / 100.0;
         
         // Lyrics State
         private string _previousLyric = "";
@@ -371,6 +385,17 @@ namespace OpenReceiver.ViewModels
                     NextNextLyric = _activeLyricsLines.Count > 1 ? _activeLyricsLines[1].Text : "";
                 }
             }
+        }
+
+        public void UpdateVolume(float dbVolume)
+        {
+            // AirPlay volume is typically -30.0 (mute) to 0.0 (max)
+            if (dbVolume <= -30.0f)
+                VolumePercent = 0;
+            else if (dbVolume >= 0.0f)
+                VolumePercent = 100;
+            else
+                VolumePercent = (dbVolume + 30.0f) / 30.0f * 100.0f;
         }
     }
 }

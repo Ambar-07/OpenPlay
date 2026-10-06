@@ -115,14 +115,18 @@
 
                     <!-- Controls -->
                     <Grid Grid.Row="3" Margin="0,24,0,0">
-                        <!-- Left controls (Volume, More) -->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Button Background="Transparent" BorderThickness="0" Margin="0,0,8,0" Opacity="0.7">
-                                <FontIcon Glyph="&#xE995;" Foreground="White" FontSize="16"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0" Opacity="0.7">
-                                <FontIcon Glyph="&#xE712;" Foreground="White" FontSize="16"/>
-                            </Button>
+                        <!-- Left controls (Volume Indicator) -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100">
+                            <FontIcon Glyph="&#xE995;" Foreground="White" FontSize="16" Opacity="0.7" Margin="0,0,12,0"/>
+                            <Grid VerticalAlignment="Center" Height="4" Width="70">
+                                <Rectangle Fill="#33FFFFFF" RadiusX="2" RadiusY="2" HorizontalAlignment="Stretch"/>
+                                
+                                <Rectangle Fill="White" RadiusX="2" RadiusY="2" HorizontalAlignment="Stretch" RenderTransformOrigin="0,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <ScaleTransform ScaleX="{x:Bind ViewModel.VolumeScale, Mode=OneWay}" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Grid>
                         </StackPanel>
                         
                         <!-- Playback Controls (Center) -->

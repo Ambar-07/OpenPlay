@@ -302,6 +302,21 @@ namespace OpenReceiver.ViewModels
                         {
                             if (body.Length > 0) ParseDmapMetadata(body);
                         }
+                        else if (setParamType.StartsWith("text/parameters"))
+                        {
+                            string textParams = System.Text.Encoding.UTF8.GetString(body);
+                            var lines = textParams.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var line in lines)
+                            {
+                                if (line.StartsWith("volume:"))
+                                {
+                                    if (float.TryParse(line.Substring(7).Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out float vol))
+                                    {
+                                        _viewModel.DispatcherQueue.TryEnqueue(() => _viewModel.UpdateVolume(vol));
+                                    }
+                                }
+                            }
+                        }
                     }
                     break;
 
