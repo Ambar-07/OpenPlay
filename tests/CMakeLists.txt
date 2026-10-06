@@ -19,3 +19,7 @@ add_test(NAME StateManagerTest COMMAND StateManagerTest)
 add_executable(LrcParserTest lyrics/LrcParserTest.cpp)
 target_link_libraries(LrcParserTest PRIVATE core_lib)
 add_test(NAME LrcParserTest COMMAND LrcParserTest)
+
+add_executable(LocalLrcProviderTest lyrics/LocalLrcProviderTest.cpp)
+target_link_libraries(LocalLrcProviderTest PRIVATE core_lib)
+add_test(NAME LocalLrcProviderTest COMMAND LocalLrcProviderTest)
