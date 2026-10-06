@@ -46,11 +46,12 @@ namespace OpenReceiver.ViewModels
                 }
 
                 // DACP commands are sent to the client IP on the resolved port
-                string url = $"http://{ClientIp}:{_resolvedPort}/ctrl-int/1/{command}?Active-Remote={ActiveRemote}";
+                string url = $"http://{ClientIp}:{_resolvedPort}/ctrl-int/1/{command}";
                 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
                 request.Headers.Add("Viewer-Only-Client", "1");
                 request.Headers.Add("Client-DAAP-Version", "3.11");
+                request.Headers.Add("Active-Remote", ActiveRemote);
                 
                 var response = await _httpClient.SendAsync(request);
                 System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP {command} response: {response.StatusCode}");
