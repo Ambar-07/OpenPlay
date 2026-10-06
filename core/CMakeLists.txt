@@ -8,5 +8,6 @@ add_library(core_lib STATIC
     lyrics/LrcParser.cpp
     lyrics/LocalLrcProvider.cpp
     lyrics/LrclibProvider.cpp
+    lyrics/LyricsSynchronizer.cpp
 )
 target_include_directories(core_lib PUBLIC .)

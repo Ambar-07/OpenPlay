@@ -27,3 +27,7 @@ add_test(NAME LocalLrcProviderTest COMMAND LocalLrcProviderTest)
 add_executable(LrclibProviderTest lyrics/LrclibProviderTest.cpp)
 target_link_libraries(LrclibProviderTest PRIVATE core_lib)
 add_test(NAME LrclibProviderTest COMMAND LrclibProviderTest)
+
+add_executable(LyricsSynchronizerTest lyrics/LyricsSynchronizerTest.cpp)
+target_link_libraries(LyricsSynchronizerTest PRIVATE core_lib)
+add_test(NAME LyricsSynchronizerTest COMMAND LyricsSynchronizerTest)
