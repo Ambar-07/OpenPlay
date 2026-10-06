@@ -14,6 +14,12 @@ namespace OpenReceiver.ViewModels
         private double _position = 0;
         private double _duration = 100;
         
+        // Lyrics State
+        private string _previousLyric = "";
+        private string _currentLyric = "";
+        private string _nextLyric = "";
+        private bool _isLyricsAvailable = false;
+        
         public string Title 
         { 
             get => _title; 
@@ -50,6 +56,30 @@ namespace OpenReceiver.ViewModels
             set { _duration = value; OnPropertyChanged(); }
         }
 
+        public string PreviousLyric
+        {
+            get => _previousLyric;
+            set { _previousLyric = value; OnPropertyChanged(); }
+        }
+
+        public string CurrentLyric
+        {
+            get => _currentLyric;
+            set { _currentLyric = value; OnPropertyChanged(); }
+        }
+
+        public string NextLyric
+        {
+            get => _nextLyric;
+            set { _nextLyric = value; OnPropertyChanged(); }
+        }
+
+        public bool IsLyricsAvailable
+        {
+            get => _isLyricsAvailable;
+            set { _isLyricsAvailable = value; OnPropertyChanged(); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -65,6 +95,12 @@ namespace OpenReceiver.ViewModels
             IsPlaying = true;
             Duration = 230;
             Position = 45;
+
+            // Mock Lyrics
+            IsLyricsAvailable = true;
+            PreviousLyric = "I'm a motherf***in' starboy";
+            CurrentLyric = "Look what you've done";
+            NextLyric = "I'm a motherf***in' starboy";
         }
 
         // P/Invoke definitions for the Native Bridge

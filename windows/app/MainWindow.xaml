@@ -17,8 +17,9 @@
 
         <Grid Margin="60">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/> <!-- Artwork -->
+                <ColumnDefinition Width="400"/>  <!-- Metadata/Controls -->
+                <ColumnDefinition Width="*"/>    <!-- Lyrics -->
             </Grid.ColumnDefinitions>
 
             <!-- Album Artwork Mock -->
@@ -48,12 +49,36 @@
                 </Grid>
 
                 <!-- Controls -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,32,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,32,0,0">
                     <Button Content="⏮" FontSize="24" Background="Transparent" Foreground="White" BorderThickness="0" Margin="0,0,24,0"/>
                     <Button Content="⏸" FontSize="36" Background="Transparent" Foreground="White" BorderThickness="0" Margin="0,0,24,0"/>
                     <Button Content="⏭" FontSize="24" Background="Transparent" Foreground="White" BorderThickness="0"/>
                 </StackPanel>
             </StackPanel>
+
+            <!-- Lyrics Area -->
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="80,0,0,0" 
+                        Visibility="{x:Bind ViewModel.IsLyricsAvailable, Mode=OneWay}">
+                <!-- Quiet surrounding line (previous) -->
+                <TextBlock Text="{x:Bind ViewModel.PreviousLyric, Mode=OneWay}" 
+                           FontSize="32" Foreground="#444444" 
+                           FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,24"/>
+                           
+                <!-- Prominent active line -->
+                <TextBlock Text="{x:Bind ViewModel.CurrentLyric, Mode=OneWay}" 
+                           FontSize="48" Foreground="White" 
+                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24"/>
+                           
+                <!-- Quiet surrounding line (next) -->
+                <TextBlock Text="{x:Bind ViewModel.NextLyric, Mode=OneWay}" 
+                           FontSize="32" Foreground="#444444" 
+                           FontWeight="SemiBold" TextWrapping="Wrap"/>
+            </StackPanel>
+            
+            <!-- Lyrics Unavailable State -->
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Text="Lyrics unavailable" FontSize="24" Foreground="#444444"
+                       Visibility="{x:Bind ViewModel.IsLyricsAvailable, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"/>
         </Grid>
     </Grid>
 </Window>
