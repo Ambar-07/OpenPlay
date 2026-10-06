@@ -97,6 +97,7 @@ namespace OpenReceiver.ViewModels
                     {
                         writer.WriteBytes(bytesToLoad);
                         await writer.StoreAsync();
+                        writer.DetachStream(); // Prevent DataWriter from closing the stream on dispose!
                     }
                     
                     stream.Seek(0);
@@ -143,8 +144,7 @@ namespace OpenReceiver.ViewModels
                 OnPropertyChanged(nameof(PositionString));
                 OnPropertyChanged(nameof(RemainingString));
                 OnPropertyChanged(nameof(ProgressPercent));
-                OnPropertyChanged(nameof(ProgressStarWidth));
-                OnPropertyChanged(nameof(RemainingStarWidth));
+                OnPropertyChanged(nameof(ProgressScale));
             }
         }
 
@@ -162,9 +162,7 @@ namespace OpenReceiver.ViewModels
         public string PositionString => TimeSpan.FromSeconds(_position).ToString(@"m\:ss");
         public string RemainingString => "-" + TimeSpan.FromSeconds(Math.Max(0, _duration - _position)).ToString(@"m\:ss");
         public double ProgressPercent => _duration > 0 ? (_position / _duration) * 100.0 : 0;
-        
-        public Microsoft.UI.Xaml.GridLength ProgressStarWidth => new Microsoft.UI.Xaml.GridLength(Math.Max(ProgressPercent, 0.01), Microsoft.UI.Xaml.GridUnitType.Star);
-        public Microsoft.UI.Xaml.GridLength RemainingStarWidth => new Microsoft.UI.Xaml.GridLength(Math.Max(100.0 - ProgressPercent, 0.01), Microsoft.UI.Xaml.GridUnitType.Star);
+        public double ProgressScale => _duration > 0 ? Math.Min(Math.Max(_position / _duration, 0.0), 1.0) : 0;
 
         public string PreviousLyric
         {
