@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="assets/logo.png" width="200" alt="OpenReceiver Logo">
   <h1>OpenReceiver</h1>
   <p><b>A Clean-Room, High-Fidelity AirPlay Audio Receiver for Windows & Android TV</b></p>
   
