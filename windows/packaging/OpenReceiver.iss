@@ -4,7 +4,7 @@
 [Setup]
 AppName=OpenReceiver
 AppVersion=0.1.0
-AppPublisher=OpenReceiver Community
+AppPublisher=Ambar
 DefaultDirName={autopf}\OpenReceiver
 DefaultGroupName=OpenReceiver
 UninstallDisplayIcon={app}\OpenReceiverApp.exe
@@ -13,6 +13,7 @@ SolidCompression=yes
 OutputDir=.\Output
 OutputBaseFilename=OpenReceiver_Setup_x64
 ArchitecturesInstallIn64BitMode=x64
+SetupIconFile=icon.ico
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
