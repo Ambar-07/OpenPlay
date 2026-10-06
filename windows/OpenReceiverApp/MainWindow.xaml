@@ -6,18 +6,38 @@
     Title="OpenReceiver">
 
     <Grid>
-        <!-- The Adaptive, Flowing Album Art Background -->
-        <Image x:Name="BgImage" Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Opacity="0.9" RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
-                <CompositeTransform x:Name="BgTransform" ScaleX="1.2" ScaleY="1.2" Rotation="0"/>
-            </Image.RenderTransform>
-        </Image>
-        
-        <!-- Heavy Blur Overlay to create the smooth gradient look -->
+        <!-- The Adaptive, Fluid Flowing Album Art Background -->
         <Grid>
-            <Grid.Background>
-                <AcrylicBrush TintColor="#FF1A1A1A" TintOpacity="0.55" FallbackColor="#FF1A1A1A" />
-            </Grid.Background>
+            <!-- Background base -->
+            <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Opacity="0.5"/>
+            
+            <!-- Blob 1 -->
+            <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Width="800" Height="800" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="0.9">
+                <Image.RenderTransform>
+                    <CompositeTransform x:Name="Blob1Transform" TranslateX="-100" TranslateY="-100" ScaleX="1.5" ScaleY="1.5" Rotation="0" />
+                </Image.RenderTransform>
+            </Image>
+            
+            <!-- Blob 2 -->
+            <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Width="1000" Height="1000" HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="0.9">
+                <Image.RenderTransform>
+                    <CompositeTransform x:Name="Blob2Transform" TranslateX="100" TranslateY="100" ScaleX="2.0" ScaleY="2.0" Rotation="45"/>
+                </Image.RenderTransform>
+            </Image>
+            
+            <!-- Blob 3 -->
+            <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill" Width="900" Height="900" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.9">
+                <Image.RenderTransform>
+                    <CompositeTransform x:Name="Blob3Transform" TranslateX="0" TranslateY="0" ScaleX="1.8" ScaleY="1.8" Rotation="90"/>
+                </Image.RenderTransform>
+            </Image>
+            
+            <!-- Heavy Blur Overlay to create the smooth fluid gradient look -->
+            <Grid>
+                <Grid.Background>
+                    <AcrylicBrush TintColor="#FF080808" TintOpacity="0.4" FallbackColor="#FF0F0F0F" />
+                </Grid.Background>
+            </Grid>
         </Grid>
 
         <!-- Custom Title Bar Area (Top edge seamlessness) -->
@@ -140,9 +160,13 @@
                            FontWeight="Medium" TextWrapping="Wrap" Margin="0,0,0,16" LineHeight="28" FontFamily="Segoe UI Variable Display"/>
 
                 <!-- Prominent active line -->
-                <TextBlock Text="{x:Bind ViewModel.CurrentLyric, Mode=OneWay}" 
+                <TextBlock x:Name="CurrentLyricText" Text="{x:Bind ViewModel.CurrentLyric, Mode=OneWay}" 
                            FontSize="28" Foreground="White" Opacity="1.0"
-                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,16" LineHeight="36" FontFamily="Segoe UI Variable Display"/>
+                           FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,16" LineHeight="36" FontFamily="Segoe UI Variable Display" RenderTransformOrigin="0,0.5">
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform x:Name="CurrentLyricScale" ScaleX="1.0" ScaleY="1.0"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
                            
                 <!-- Fading surrounding lines -->
                 <TextBlock Text="{x:Bind ViewModel.NextLyric, Mode=OneWay}" 
