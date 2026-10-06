@@ -179,6 +179,8 @@ namespace OpenReceiver.ViewModels
             set { _nextNextLyric = value; OnPropertyChanged(); }
         }
 
+        private bool _userPrefersLyrics = true;
+
         public bool IsLyricsAvailable
         {
             get => _isLyricsAvailable;
@@ -194,7 +196,7 @@ namespace OpenReceiver.ViewModels
         public Microsoft.UI.Xaml.Visibility LyricsVisibility => _isLyricsAvailable ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
         public Microsoft.UI.Xaml.Visibility NoLyricsVisibility => !_isLyricsAvailable ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -237,7 +239,8 @@ namespace OpenReceiver.ViewModels
         {
             if (_activeLyricsLines != null && _activeLyricsLines.Count > 0)
             {
-                IsLyricsAvailable = !IsLyricsAvailable;
+                _userPrefersLyrics = !IsLyricsAvailable;
+                IsLyricsAvailable = _userPrefersLyrics;
             }
         }
 
@@ -324,7 +327,7 @@ namespace OpenReceiver.ViewModels
                     if (lines != null && lines.Count > 0)
                     {
                         _activeLyricsLines = lines;
-                        IsLyricsAvailable = true;
+                        IsLyricsAvailable = _userPrefersLyrics;
                         UpdateLyricsForPosition(Position);
                     }
                 }
