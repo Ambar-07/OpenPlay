@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#1A1A1A"
+    android:padding="60dp"
+    android:weightSum="3">
+
+    <!-- Left side: Artwork and Metadata -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <!-- Mock Album Artwork Container -->
+        <View
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="#333333"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting for AirPlay..."
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OpenReceiver"
+            android:textSize="24sp"
+            android:textColor="#CCCCCC" />
+            
+    </LinearLayout>
+
+    <!-- Right side: Cinematic Lyrics -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp">
+
+        <TextView
+            android:id="@+id/tvPrevLyric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textColor="#555555"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvCurrentLyric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect from your iPhone"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvNextLyric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textColor="#555555" />
+            
+    </LinearLayout>
+
+</LinearLayout>
