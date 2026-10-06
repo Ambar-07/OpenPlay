@@ -30,14 +30,14 @@ namespace OpenReceiver.ViewModels
                         {
                             var service = host.Services["_dacp._tcp.local."];
                             _resolvedPort = service.Port;
-                            System.IO.File.AppendAllText("airplay.log", $"[{DateTime.Now:HH:mm:ss.fff}] Resolved DACP port for {ClientIp} to {_resolvedPort}\n");
+                            System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] Resolved DACP port for {ClientIp} to {_resolvedPort}");
                             break;
                         }
                     }
                     
                     if (_resolvedPort == -1)
                     {
-                        System.IO.File.AppendAllText("airplay.log", $"[{DateTime.Now:HH:mm:ss.fff}] Failed to resolve DACP port for {ClientIp}. Falling back to 3689.\n");
+                        System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] Failed to resolve DACP port for {ClientIp}. Falling back to 3689.");
                         _resolvedPort = 3689; // Fallback
                     }
                 }
@@ -50,13 +50,11 @@ namespace OpenReceiver.ViewModels
                 request.Headers.Add("Client-DAAP-Version", "3.11");
                 
                 var response = await _httpClient.SendAsync(request);
-                string log = $"[{DateTime.Now:HH:mm:ss.fff}] DACP {command} response: {response.StatusCode}\n";
-                System.IO.File.AppendAllText("airplay.log", log);
+                System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP {command} response: {response.StatusCode}");
             }
             catch (Exception ex)
             {
-                string log = $"[{DateTime.Now:HH:mm:ss.fff}] DACP Error: {ex.Message}\n";
-                System.IO.File.AppendAllText("airplay.log", log);
+                System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP Error: {ex.Message}");
             }
         }
     }
