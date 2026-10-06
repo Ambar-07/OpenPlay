@@ -15,3 +15,7 @@ add_test(NAME MetadataTest COMMAND MetadataTest)
 add_executable(StateManagerTest state/StateManagerTest.cpp)
 target_link_libraries(StateManagerTest PRIVATE core_lib)
 add_test(NAME StateManagerTest COMMAND StateManagerTest)
+
+add_executable(LrcParserTest lyrics/LrcParserTest.cpp)
+target_link_libraries(LrcParserTest PRIVATE core_lib)
+add_test(NAME LrcParserTest COMMAND LrcParserTest)

@@ -5,5 +5,6 @@ add_library(core_lib STATIC
     metadata/MetadataParser.cpp
     metadata/BackgroundGenerator.cpp
     state/StateManager.cpp
+    lyrics/LrcParser.cpp
 )
 target_include_directories(core_lib PUBLIC .)
