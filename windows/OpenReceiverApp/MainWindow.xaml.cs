@@ -113,9 +113,9 @@ namespace OpenReceiver
                 storyboard.Children.Add(fadeAnim);
                 storyboard.Begin();
             }
-            else if (e.PropertyName == nameof(ViewModel.LyricsVisibility))
+            else if (e.PropertyName == nameof(ViewModel.LyricsPanelVisibility))
             {
-                if (ViewModel.LyricsVisibility == Visibility.Visible)
+                if (ViewModel.LyricsPanelVisibility == Visibility.Visible)
                 {
                     AlbumColumn.Width = new GridLength(4.5, GridUnitType.Star);
                     LyricsColumn.Width = new GridLength(5.5, GridUnitType.Star);

@@ -149,8 +149,8 @@
                         </StackPanel>
                         
                         <!-- Lyrics Toggle (Right aligned with chat bubble icon) -->
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="#1AFFFFFF" BorderThickness="0" CornerRadius="8" Padding="12,6" Click="{x:Bind ViewModel.ToggleLyrics}">
-                            <FontIcon Glyph="&#xE8BD;" Foreground="White" FontSize="14" Opacity="0.9"/>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Bind ViewModel.LyricsButtonBackground, Mode=OneWay}" BorderThickness="0" CornerRadius="8" Width="40" Height="32" Click="{x:Bind ViewModel.ToggleLyrics}">
+                            <FontIcon Glyph="&#xE8BD;" Foreground="{x:Bind ViewModel.LyricsButtonForeground, Mode=OneWay}" FontSize="14" Opacity="{x:Bind ViewModel.LyricsButtonOpacity, Mode=OneWay}"/>
                         </Button>
                     </Grid>
                 </Grid>

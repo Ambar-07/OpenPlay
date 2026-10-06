@@ -209,7 +209,8 @@ namespace OpenReceiver.ViewModels
         }
 
         public Microsoft.UI.Xaml.Visibility LyricsVisibility => _isLyricsAvailable ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
-        public Microsoft.UI.Xaml.Visibility NoLyricsVisibility => !_isLyricsAvailable ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
+        public Microsoft.UI.Xaml.Visibility NoLyricsVisibility => (_userPrefersLyrics && !_isLyricsAvailable) ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
+        public Microsoft.UI.Xaml.Visibility LyricsPanelVisibility => _userPrefersLyrics ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -252,12 +253,19 @@ namespace OpenReceiver.ViewModels
 
         public void ToggleLyrics()
         {
-            if (_activeLyricsLines != null && _activeLyricsLines.Count > 0)
-            {
-                _userPrefersLyrics = !IsLyricsAvailable;
-                IsLyricsAvailable = _userPrefersLyrics;
-            }
+            _userPrefersLyrics = !_userPrefersLyrics;
+            IsLyricsAvailable = _userPrefersLyrics && _activeLyricsLines != null && _activeLyricsLines.Count > 0;
+            
+            OnPropertyChanged(nameof(LyricsButtonBackground));
+            OnPropertyChanged(nameof(LyricsButtonForeground));
+            OnPropertyChanged(nameof(LyricsButtonOpacity));
+            OnPropertyChanged(nameof(LyricsPanelVisibility));
+            OnPropertyChanged(nameof(NoLyricsVisibility));
         }
+
+        public Microsoft.UI.Xaml.Media.SolidColorBrush LyricsButtonBackground => new Microsoft.UI.Xaml.Media.SolidColorBrush(_userPrefersLyrics ? Windows.UI.Color.FromArgb(50, 255, 255, 255) : Windows.UI.Color.FromArgb(0, 0, 0, 0));
+        public Microsoft.UI.Xaml.Media.SolidColorBrush LyricsButtonForeground => new Microsoft.UI.Xaml.Media.SolidColorBrush(_userPrefersLyrics ? Windows.UI.Color.FromArgb(255, 255, 255, 255) : Windows.UI.Color.FromArgb(180, 255, 255, 255));
+        public double LyricsButtonOpacity => _userPrefersLyrics ? 1.0 : 0.6;
 
         // P/Invoke definitions for the Native Bridge
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -345,6 +353,16 @@ namespace OpenReceiver.ViewModels
                         IsLyricsAvailable = _userPrefersLyrics;
                         UpdateLyricsForPosition(Position);
                     }
+                    else
+                    {
+                        IsLyricsAvailable = false;
+                    }
+                    
+                    OnPropertyChanged(nameof(LyricsButtonBackground));
+                    OnPropertyChanged(nameof(LyricsButtonForeground));
+                    OnPropertyChanged(nameof(LyricsButtonOpacity));
+                    OnPropertyChanged(nameof(LyricsPanelVisibility));
+                    OnPropertyChanged(nameof(NoLyricsVisibility));
                 }
             });
         }
