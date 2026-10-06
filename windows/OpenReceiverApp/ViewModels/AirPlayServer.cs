@@ -312,6 +312,13 @@ namespace OpenReceiver.ViewModels
                                 {
                                     if (float.TryParse(line.Substring(7).Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out float vol))
                                     {
+                                        if (_waveOut != null)
+                                        {
+                                            float linearVol = 1.0f;
+                                            if (vol <= -30.0f) linearVol = 0.0f;
+                                            else if (vol < 0.0f) linearVol = (vol + 30.0f) / 30.0f;
+                                            _waveOut.Volume = linearVol;
+                                        }
                                         _viewModel.DispatcherQueue.TryEnqueue(() => _viewModel.UpdateVolume(vol));
                                     }
                                 }
