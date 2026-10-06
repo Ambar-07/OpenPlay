@@ -277,7 +277,21 @@ namespace OpenReceiver.ViewModels
                     break;
 
                 case "SET_PARAMETER":
-                    if (body.Length > 0) ParseDmapMetadata(body);
+                    if (headers.TryGetValue("Content-Type", out var setParamType))
+                    {
+                        if (setParamType.StartsWith("image/jpeg") || setParamType.StartsWith("image/png"))
+                        {
+                            if (body.Length > 0)
+                            {
+                                try { _viewModel.SetAlbumArtFromBytes(body); }
+                                catch (Exception ex) { Log("Failed to set album art: " + ex.Message); }
+                            }
+                        }
+                        else if (setParamType.StartsWith("application/x-dmap-tagged"))
+                        {
+                            if (body.Length > 0) ParseDmapMetadata(body);
+                        }
+                    }
                     break;
 
                 case "TEARDOWN":
