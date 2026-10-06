@@ -322,6 +322,25 @@ namespace OpenReceiver.ViewModels
                                         _viewModel.DispatcherQueue.TryEnqueue(() => _viewModel.UpdateVolume(vol));
                                     }
                                 }
+                                else if (line.StartsWith("progress:"))
+                                {
+                                    // progress: <curr>/<start>/<end> RTP timestamps
+                                    var parts = line.Substring(9).Trim().Split('/');
+                                    if (parts.Length >= 3)
+                                    {
+                                        if (long.TryParse(parts[0], out long curr) &&
+                                            long.TryParse(parts[1], out long start) &&
+                                            long.TryParse(parts[2], out long end))
+                                        {
+                                            // Audio is usually 44100 Hz
+                                            double pos = (curr - start) / 44100.0;
+                                            if (pos >= 0)
+                                            {
+                                                _viewModel.DispatcherQueue.TryEnqueue(() => _viewModel.Position = pos);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

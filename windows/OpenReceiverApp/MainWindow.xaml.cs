@@ -130,5 +130,40 @@ namespace OpenReceiver
                 }
             }
         }
+
+        private void OnTimelinePointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ViewModel.IsScrubbing = true;
+            UpdateScrubPosition(sender as FrameworkElement, e);
+            ((FrameworkElement)sender).CapturePointer(e.Pointer);
+        }
+
+        private void OnTimelinePointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (ViewModel.IsScrubbing)
+            {
+                UpdateScrubPosition(sender as FrameworkElement, e);
+            }
+        }
+
+        private void OnTimelinePointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (ViewModel.IsScrubbing)
+            {
+                ViewModel.IsScrubbing = false;
+                ((FrameworkElement)sender).ReleasePointerCapture(e.Pointer);
+                ViewModel.CommitScrub();
+            }
+        }
+
+        private void UpdateScrubPosition(FrameworkElement element, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var point = e.GetCurrentPoint(element);
+            double ratio = point.Position.X / element.ActualWidth;
+            if (ratio < 0) ratio = 0;
+            if (ratio > 1) ratio = 1;
+            
+            ViewModel.ScrubToRatio(ratio);
+        }
     }
 }

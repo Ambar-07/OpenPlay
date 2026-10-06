@@ -51,7 +51,7 @@ namespace OpenReceiver.ViewModels
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += (s, e) =>
             {
-                if (IsPlaying && Position < Duration)
+                if (IsPlaying && Position < Duration && !IsScrubbing)
                 {
                     Position += 1;
                 }
@@ -149,7 +149,11 @@ namespace OpenReceiver.ViewModels
                 OnPropertyChanged(nameof(RemainingString));
                 OnPropertyChanged(nameof(ProgressPercent));
                 OnPropertyChanged(nameof(ProgressScale));
-                UpdateLyricsForPosition(value);
+                
+                if (!IsScrubbing)
+                {
+                    UpdateLyricsForPosition(value);
+                }
             }
         }
 
@@ -396,6 +400,22 @@ namespace OpenReceiver.ViewModels
                 VolumePercent = 100;
             else
                 VolumePercent = (dbVolume + 30.0f) / 30.0f * 100.0f;
+        }
+
+        public bool IsScrubbing { get; set; } = false;
+
+        public void ScrubToRatio(double ratio)
+        {
+            Position = ratio * Duration;
+        }
+
+        public void CommitScrub()
+        {
+            // Send position to DACP (in milliseconds)
+            _ = DacpClient.SetPropertyAsync("dacp.playingtime", ((int)(Position * 1000)).ToString());
+            
+            // Re-sync lyrics for the new position manually
+            UpdateLyricsForPosition(Position);
         }
     }
 }

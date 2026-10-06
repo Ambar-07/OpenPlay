@@ -61,5 +61,10 @@ namespace OpenReceiver.ViewModels
                 System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] DACP Error: {ex.Message}");
             }
         }
+
+        public static async Task SetPropertyAsync(string prop, string value)
+        {
+            await SendCommandAsync($"setproperty?{prop}={value}");
+        }
     }
 }
