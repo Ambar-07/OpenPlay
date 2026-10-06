@@ -4,10 +4,10 @@
 [Setup]
 AppName=OpenReceiver
 AppVersion=0.1.0
-Publisher=OpenReceiver Community
+AppPublisher=OpenReceiver Community
 DefaultDirName={autopf}\OpenReceiver
 DefaultGroupName=OpenReceiver
-UninstallDisplayIcon={app}\OpenReceiver.exe
+UninstallDisplayIcon={app}\OpenReceiverApp.exe
 Compression=lzma2
 SolidCompression=yes
 OutputDir=.\Output
@@ -20,20 +20,20 @@ Name: "startup"; Description: "Start OpenReceiver automatically when Windows sta
 
 [Files]
 ; The main WinUI 3 executable and Core C++ DLLs
-Source: "..\build\windows\app\Release\OpenReceiver.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\windows\native\Release\OpenReceiverCore.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\windows\app\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\OpenReceiverApp.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\OpenReceiverCore.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\OpenReceiverApp\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\OpenReceiver"; Filename: "{app}\OpenReceiver.exe"
-Name: "{autodesktop}\OpenReceiver"; Filename: "{app}\OpenReceiver.exe"; Tasks: desktopicon
+Name: "{group}\OpenReceiver"; Filename: "{app}\OpenReceiverApp.exe"
+Name: "{autodesktop}\OpenReceiver"; Filename: "{app}\OpenReceiverApp.exe"; Tasks: desktopicon
 ; Add shortcut to Startup folder if task is selected
-Name: "{autostartup}\OpenReceiver"; Filename: "{app}\OpenReceiver.exe"; Parameters: "--minimized"; Tasks: startup
+Name: "{autostartup}\OpenReceiver"; Filename: "{app}\OpenReceiverApp.exe"; Parameters: "--minimized"; Tasks: startup
 
 [Run]
-Filename: "{app}\OpenReceiver.exe"; Description: "Launch OpenReceiver"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\OpenReceiverApp.exe"; Description: "Launch OpenReceiver"; Flags: nowait postinstall skipifsilent
 
 [Registry]
 ; Optional firewall exception registration (requires admin)
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules"; ValueType: string; ValueName: "OpenReceiver"; ValueData: "v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=6|Profile=Private|App={app}\OpenReceiver.exe|Name=OpenReceiver AirPlay|"; Flags: uninsdeletevalue
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules"; ValueType: string; ValueName: "OpenReceiverUDP"; ValueData: "v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=17|Profile=Private|App={app}\OpenReceiver.exe|Name=OpenReceiver UDP|"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules"; ValueType: string; ValueName: "OpenReceiver"; ValueData: "v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=6|Profile=Private|App={app}\OpenReceiverApp.exe|Name=OpenReceiver AirPlay|"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules"; ValueType: string; ValueName: "OpenReceiverUDP"; ValueData: "v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=17|Profile=Private|App={app}\OpenReceiverApp.exe|Name=OpenReceiver UDP|"; Flags: uninsdeletevalue
