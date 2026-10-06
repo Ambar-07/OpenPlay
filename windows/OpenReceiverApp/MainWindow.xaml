@@ -80,6 +80,7 @@
                             <TextBlock Text="{x:Bind ViewModel.Artist, Mode=OneWay}" 
                                        FontSize="14" Foreground="#B3FFFFFF"
                                        TextTrimming="CharacterEllipsis" FontWeight="Medium" FontFamily="Segoe UI Variable Display"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!-- Timeline -->
