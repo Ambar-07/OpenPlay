@@ -94,11 +94,9 @@ namespace OpenReceiver.ViewModels
                 try
                 {
                     var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream();
-                    using (var dotnetStream = stream.AsStreamForWrite())
-                    {
-                        dotnetStream.Write(bytesToLoad, 0, bytesToLoad.Length);
-                        dotnetStream.Flush();
-                    }
+                    var dotnetStream = stream.AsStreamForWrite();
+                    dotnetStream.Write(bytesToLoad, 0, bytesToLoad.Length);
+                    dotnetStream.Flush();
                     
                     stream.Seek(0);
                     

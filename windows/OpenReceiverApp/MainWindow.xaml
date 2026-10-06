@@ -36,12 +36,9 @@
                     </Grid.RowDefinitions>
 
                     <!-- Authentic Album Artwork with actual Image loading -->
-                    <Border Grid.Row="0" Width="420" Height="420" CornerRadius="12" BorderBrush="#22FFFFFF" BorderThickness="1">
-                        <!-- We use an ImageBrush bound to the URL to simulate the real cover art -->
-                        <Border.Background>
-                            <ImageBrush ImageSource="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill"/>
-                        </Border.Background>
-                    </Border>
+                    <Grid Grid.Row="0" Width="420" Height="420" CornerRadius="12" BorderBrush="#22FFFFFF" BorderThickness="1">
+                        <Image Source="{x:Bind ViewModel.AlbumArt, Mode=OneWay}" Stretch="UniformToFill"/>
+                    </Grid>
 
                     <!-- Metadata -->
                     <StackPanel Grid.Row="1" Margin="0,32,0,0">
