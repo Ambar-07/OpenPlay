@@ -182,6 +182,11 @@ namespace OpenReceiver.ViewModels
                             DacpClient.ActiveRemote = activeRemote;
                             DacpClient.ClientIp = remoteIp.ToString();
                         }
+                        
+                        if (headers.TryGetValue("DACP-ID", out var dacpId))
+                        {
+                            DacpClient.DacpId = dacpId;
+                        }
 
                         bool close = await ProcessRequestAsync(stream, method, uri, cseq, headers, body, localIp, remoteIp);
                         if (close) break;

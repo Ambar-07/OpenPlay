@@ -7,19 +7,40 @@ namespace OpenReceiver.ViewModels
     public static class DacpClient
     {
         private static readonly HttpClient _httpClient = new HttpClient();
+        private static int _resolvedPort = -1;
         
         public static string ActiveRemote { get; set; }
         public static string ClientIp { get; set; }
+        public static string DacpId { get; set; }
 
         public static async Task SendCommandAsync(string command)
         {
-            if (string.IsNullOrEmpty(ActiveRemote) || string.IsNullOrEmpty(ClientIp))
+            if (string.IsNullOrEmpty(ActiveRemote) || string.IsNullOrEmpty(ClientIp) || string.IsNullOrEmpty(DacpId))
                 return;
 
             try
             {
-                // DACP commands are sent to the client IP on port 3689
-                string url = $"http://{ClientIp}:3689/ctrl-int/1/{command}?Active-Remote={ActiveRemote}";
+                if (_resolvedPort == -1)
+                {
+                    // Resolve the DACP port via mDNS
+                    var results = await Zeroconf.ZeroconfResolver.ResolveAsync("_dacp._tcp.local.");
+                    foreach (var host in results)
+                    {
+                        if (host.IPAddress == ClientIp && host.Services.ContainsKey("_dacp._tcp.local."))
+                        {
+                            var service = host.Services["_dacp._tcp.local."];
+                            _resolvedPort = service.Port;
+                            System.Diagnostics.Debug.WriteLine($"Resolved DACP port for {ClientIp} to {_resolvedPort}");
+                            break;
+                        }
+                    }
+                    
+                    if (_resolvedPort == -1)
+                        _resolvedPort = 3689; // Fallback
+                }
+
+                // DACP commands are sent to the client IP on the resolved port
+                string url = $"http://{ClientIp}:{_resolvedPort}/ctrl-int/1/{command}?Active-Remote={ActiveRemote}";
                 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
                 request.Headers.Add("Viewer-Only-Client", "1");
