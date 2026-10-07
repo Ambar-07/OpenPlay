@@ -36,6 +36,36 @@ Unlike legacy AirPlay mirroring forks, OpenReceiver focuses exclusively on provi
 
 The repository is strictly segregated to ensure absolute separation between the protocol parsing layer and the platform-specific UI shells.
 
+```mermaid
+graph TD
+    subgraph Apple Devices
+        iPhone[iPhone / iPad / Mac]
+    end
+
+    subgraph OpenReceiver [OpenReceiver Core C++]
+        mDNS[mDNS Discovery]
+        RTSP[RTSP Server & State Machine]
+        ALAC[ALAC Decoder]
+        Lyrics[Lyrics Engine]
+    end
+    
+    subgraph UIs [Platform UIs]
+        WinUI[Windows 11 WinUI 3]
+        Android[Android TV Kotlin]
+    end
+
+    iPhone -- 1. Discovers via Bonjour --> mDNS
+    iPhone -- 2. Handshake & Metadata --> RTSP
+    iPhone -- 3. Encrypted Audio Stream --> ALAC
+    
+    RTSP -- "Track Info (Title, Artist)" --> Lyrics
+    Lyrics -- "Fetches from lrclib.net" --> Internet((Internet))
+    
+    RTSP -- UI Updates & Cover Art --> UIs
+    ALAC -- PCM Audio Data --> UIs
+    Lyrics -- Synchronized Lines --> UIs
+```
+
 - **`core/` (C++17 Engine)**
   - Implements the complete AirPlay 1 (RAOP) state machine.
   - Handles Zero-Configuration Networking (mDNS) discovery.
