@@ -18,11 +18,11 @@ OpenReceiver is a modern, cross-platform AirPlay audio receiver implemented enti
 
 Unlike legacy AirPlay mirroring forks, OpenReceiver focuses exclusively on providing an uncompromising, high-fidelity audio pipeline paired with a cinematic user interface that feels native to modern living room displays.
 
-![Main UI](assets/main_ui.png)
-<p align="center"><i>The OpenReceiver Windows 11 Shell displaying the Cinematic UI and Synchronized Lyrics.</i></p>
-
 ![Control Center](assets/control_center.png)
 <p align="center"><i>Seamless native integration with the iOS Control Center.</i></p>
+
+![Main UI](assets/main_ui.png)
+<p align="center"><i>The OpenReceiver Windows 11 Shell displaying the Cinematic UI and Synchronized Lyrics.</i></p>
 
 ![Android TV Lyrics](assets/android_lyrics.png)
 <p align="center"><i>The Android TV 10-foot experience, featuring synchronized lyrics and Palette-based ambient mesh gradients.</i></p>
