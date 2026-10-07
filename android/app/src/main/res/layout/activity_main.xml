@@ -1,80 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#1A1A1A"
-    android:padding="60dp"
-    android:weightSum="3">
+    android:background="#0A0B10">
 
-    <!-- Left side: Artwork and Metadata -->
+    <com.openreceiver.ui.FluidBackgroundView
+        android:id="@+id/fluidBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:orientation="horizontal"
+        android:paddingStart="60dp"
+        android:paddingEnd="40dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:weightSum="10">
 
-        <!-- Mock Album Artwork Container -->
-        <View
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:background="#333333"
-            android:layout_marginBottom="24dp" />
+        <!-- LEFT COLUMN -->
+        <LinearLayout
+            android:id="@+id/albumColumn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingEnd="40dp">
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Waiting for AirPlay..."
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="start|bottom">
 
-        <TextView
-            android:id="@+id/tvArtist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OpenReceiver"
-            android:textSize="24sp"
-            android:textColor="#CCCCCC" />
-            
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1" />
+
+                <!-- Left-aligned Album Art -->
+                <com.openreceiver.ui.SquareFrameLayout
+                    android:id="@+id/artworkCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="24dp"
+                    android:elevation="24dp"
+                    android:background="@drawable/bg_artwork_shadow">
+
+                    <ImageView
+                        android:id="@+id/ivArtwork"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_artwork" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_artwork_border" />
+                </com.openreceiver.ui.SquareFrameLayout>
+
+                <!-- Left-aligned metadata and controls -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ready for AirPlay"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="#FFFFFF"
+                        android:gravity="start"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_marginBottom="2dp" />
+
+                    <TextView
+                        android:id="@+id/tvArtist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select 'OpenReceiver' on your iPhone"
+                        android:textSize="16sp"
+                        android:textColor="#B3FFFFFF"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="24dp" />
+
+                    <!-- Timeline Bar with Thumb -->
+                    <SeekBar
+                        android:id="@+id/progressTrack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="4dp"
+                        android:maxHeight="4dp"
+                        android:max="1000"
+                        android:progressDrawable="@drawable/bg_progress_track_custom"
+                        android:thumb="@drawable/ic_thumb"
+                        android:thumbOffset="0dp"
+                        android:splitTrack="false"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="0dp" />
+
+                    <!-- Times below the bar -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="16dp">
+                        
+                        <TextView
+                            android:id="@+id/tvTimeLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="0:00"
+                            android:textSize="12sp"
+                            android:textColor="#99FFFFFF"
+                            android:fontFamily="sans-serif" />
+
+                        <TextView
+                            android:id="@+id/tvTimeRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="-0:00"
+                            android:textSize="12sp"
+                            android:textColor="#99FFFFFF"
+                            android:fontFamily="sans-serif" />
+                    </RelativeLayout>
+
+                    <!-- Lyrics Toggle Button -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+
+                        <FrameLayout
+                            android:id="@+id/btnLyrics"
+                            android:layout_width="40dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/bg_lyrics_btn_active"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:id="@+id/ivLyricsIcon"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_lyrics"
+                                android:tint="#FFFFFF" />
+                        </FrameLayout>
+                    </LinearLayout>
+                    
+                    <!-- Bottom spacing -->
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- RIGHT COLUMN: 6 Lyrics Lines + Glowing active lyric -->
+        <FrameLayout
+            android:id="@+id/lyricsColumn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:paddingStart="40dp">
+
+            <LinearLayout
+                android:id="@+id/lyricPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvPrevPrevLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#33FFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvPrevLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textColor="#59FFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Current Active Lyric: White + Glow -->
+                <TextView
+                    android:id="@+id/tvCurrentLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="36sp"
+                    android:textColor="#FFFFFFFF"
+                    android:fontFamily="sans-serif-black"
+                    android:textStyle="bold"
+                    android:shadowColor="#80FFFFFF"
+                    android:shadowRadius="16"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:lineSpacingMultiplier="1.1"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvNextLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="#59FFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvNextNextLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textColor="#33FFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvNextNextNextLyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#1AFFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingMultiplier="1.2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/noLyricsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Lyrics unavailable"
+                android:textSize="22sp"
+                android:textColor="#44FFFFFF"
+                android:fontFamily="sans-serif"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
     </LinearLayout>
 
-    <!-- Right side: Cinematic Lyrics -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:paddingStart="60dp">
-
-        <TextView
-            android:id="@+id/tvPrevLyric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:textColor="#555555"
-            android:paddingBottom="16dp"/>
-
-        <TextView
-            android:id="@+id/tvCurrentLyric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Connect from your iPhone"
-            android:textSize="42sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:paddingBottom="16dp"/>
-
-        <TextView
-            android:id="@+id/tvNextLyric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:textColor="#555555" />
-            
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

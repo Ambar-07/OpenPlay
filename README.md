@@ -24,6 +24,12 @@ Unlike legacy AirPlay mirroring forks, OpenReceiver focuses exclusively on provi
 ![Control Center](assets/control_center.png)
 <p align="center"><i>Seamless native integration with the iOS Control Center.</i></p>
 
+![Android TV Lyrics](assets/android_lyrics.png)
+<p align="center"><i>The Android TV 10-foot experience, featuring synchronized lyrics and Palette-based ambient mesh gradients.</i></p>
+
+![Android TV Idle](assets/android_nolyrics.png)
+<p align="center"><i>Clean layout on Android TV when lyrics are hidden, perfectly adapted for large screens.</i></p>
+
 ---
 
 ## Core Architecture
