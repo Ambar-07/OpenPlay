@@ -96,8 +96,3 @@ AirPlay relies heavily on multicast DNS (mDNS). OpenReceiver provides an automat
 If your network is failing to discover the receiver, it is typically related to router-level AP Isolation or OS-level firewall restrictions. 
 Read the [Troubleshooting & Network Configuration Guide](docs/TROUBLESHOOTING.md) for step-by-step resolution paths.
 
----
-
-<div align="center">
-  <p>Built with precision for <b>OpenPlay</b>.</p>
-</div>
