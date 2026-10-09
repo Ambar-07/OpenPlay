@@ -87,7 +87,7 @@ graph TD
 
 ## Features
 
-### Cinematic "Now Playing" Experience
+### "Now Playing" Experience
 OpenReceiver doesn't just play audio; it visualizes it. The UI extracts album artwork directly from the protocol and renders a gorgeous, full-screen layout utilizing the native Windows 11 Acrylic Backdrop to blend with your desktop environment. The layout is fully responsive, smoothly centering the album art when the lyrics panel is closed.
 
 ### Real-Time Synchronized Lyrics
